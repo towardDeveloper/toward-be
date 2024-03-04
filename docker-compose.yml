@@ -1,0 +1,54 @@
+version: '3'
+services:
+  db:
+    container_name: mysql
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/store:/var/lib/mysql
+    networks:
+      - network
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_DRIVER: ${SPRING_DATASOURCE_DRIVER}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: "ap-northeast-2"
+        awslogs-group: "docker-log"
+        awslogs-multiline-pattern: "^(INFO|ERROR)"
+        awslogs-stream: "docker-backend"
+    networks:
+      - network
+
+  frontend:
+    container_name: front
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+    networks:
+      - network
+
+networks:
+  network:
