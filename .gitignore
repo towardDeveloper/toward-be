@@ -19,7 +19,7 @@ bin/
 
 # application-local.yml과 application-dev.yml을 무시
 application-local.yml
-application-dev.yml
+application-develop.yml
 
 ### IntelliJ IDEA ###
 .idea
