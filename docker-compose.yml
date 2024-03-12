@@ -37,18 +37,18 @@ services:
     networks:
       - network
 
-  frontend:
-    container_name: front
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - 80:80
-    depends_on:
-      - backend
-    networks:
-      - network
+#  frontend:
+#    container_name: front
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#      - 80:80
+#    depends_on:
+#      - backend
+#    networks:
+#      - network
 
 networks:
   network:
