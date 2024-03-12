@@ -23,7 +23,6 @@ public class SwaggerConfig {
 
     @Bean
     // 운영 환경에는 Swagger를 비활성화하기 위해 추가했습니다.
-    @Profile("!deploy")
     public OpenAPI api() {
         SecurityScheme apiKey = new SecurityScheme()
                 .type(SecurityScheme.Type.HTTP)
